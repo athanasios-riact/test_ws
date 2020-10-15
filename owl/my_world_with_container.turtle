@@ -1,0 +1,419 @@
+@prefix : <> .
+@prefix SUMO: <http://www.semanticweb.org/ontologies/2013/7/RobotsAutomation.owl#SUMO:> .
+@prefix cora: <http://www.inf.ufrgs.br/phi-group/ontologies/cora.owl#> .
+@prefix coraX: <http://www.inf.ufrgs.br/phi-group/ontologies/coraX#> .
+@prefix coraX1: <http://www.inf.ufrgs.br/phi-group/ontologies/coraX.owl#> .
+@prefix corax: <http://www.inf.ufrgs.br/phi-group/ontologies/coraX.owl#> .
+@prefix default1: <> .
+@prefix default11: <> .
+@prefix default2: <> .
+@prefix default21: <> .
+@prefix default3: <> .
+@prefix default31: <> .
+@prefix default4: <> .
+@prefix default41: <> .
+@prefix default5: <> .
+@prefix default51: <> .
+@prefix default6: <> .
+@prefix ns1: <Container:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl2xml: <http://www.w3.org/2006/12/owl2-xml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rparts: <http://www.inf.ufrgs.br/phi-group/ontologies/RParts.owl#> .
+@prefix skiros: <http://rvmi.aau.dk/ontologies/skiros.owl#> .
+@prefix sumo: <http://www.inf.ufrgs.br/phi-group/ontologies/sumo.owl#> .
+@prefix turtlebot: <http://rvmi.aau.dk/ontologies/turtlebot.owl#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+skiros:Follow a owl:class ;
+    rdfs:subClassOf skiros:TurtlesimSkills .
+
+skiros:LargeBox-32 ns1:ContainerName "/c1"^^xsd:string ;
+    skiros:X "10.0"^^xsd:float ;
+    skiros:Y "10.0"^^xsd:float .
+
+skiros:Orbit a owl:class ;
+    rdfs:subClassOf skiros:TurtlesimSkills .
+
+skiros:Patrol a owl:class ;
+    rdfs:subClassOf skiros:TurtlesimSkills .
+
+skiros:Scene-0 a skiros:Scene,
+        owl:NamedIndividual ;
+    rdfs:label "" ;
+    skiros:DiscreteReasoner "AauSpatialReasoner"^^xsd:string ;
+    skiros:FrameId "map"^^xsd:string ;
+    skiros:OrientationW "1.0"^^xsd:float ;
+    skiros:OrientationX "0.0"^^xsd:float ;
+    skiros:OrientationY "0.0"^^xsd:float ;
+    skiros:OrientationZ "0.0"^^xsd:float ;
+    skiros:PositionX "0.0"^^xsd:float ;
+    skiros:PositionY "0.0"^^xsd:float ;
+    skiros:PositionZ "0.0"^^xsd:float ;
+    skiros:contain skiros:LargeBox-18,
+        skiros:LargeBox-26,
+        cora:Robot-1 .
+
+skiros:ConditionProperty-63 a skiros:ConditionProperty,
+        owl:NamedIndividual ;
+    rdfs:label "NotEmpty" ;
+    skiros:appliedOnType "skiros:ContainerState"^^xsd:string ;
+    skiros:desiredState false ;
+    skiros:desiredValue "Empty"^^xsd:string ;
+    skiros:hasSubject "Container"^^xsd:string ;
+    skiros:operator "="^^xsd:string .
+
+skiros:ConditionProperty-70 a skiros:ConditionProperty,
+        owl:NamedIndividual ;
+    rdfs:label "NotEmpty" ;
+    skiros:appliedOnType "skiros:ContainerState"^^xsd:string ;
+    skiros:desiredState false ;
+    skiros:desiredValue "Empty"^^xsd:string ;
+    skiros:hasSubject "Container"^^xsd:string ;
+    skiros:operator "="^^xsd:string .
+
+skiros:ConditionRelation-62 a skiros:ConditionRelation,
+        owl:NamedIndividual ;
+    rdfs:label "TurtleAt" ;
+    skiros:appliedOnType "skiros:at"^^xsd:string ;
+    skiros:desiredState true ;
+    skiros:hasObject "Container"^^xsd:string ;
+    skiros:hasSubject "Turtle"^^xsd:string .
+
+skiros:ConditionRelation-69 a skiros:ConditionRelation,
+        owl:NamedIndividual ;
+    rdfs:label "TurtleAt" ;
+    skiros:appliedOnType "skiros:at"^^xsd:string ;
+    skiros:desiredState true ;
+    skiros:hasObject "Container"^^xsd:string ;
+    skiros:hasSubject "Turtle"^^xsd:string .
+
+skiros:LargeBox-18 a skiros:LargeBox,
+        owl:NamedIndividual ;
+    rdfs:label "c1" ;
+    skiros:BaseFrameId "map"^^xsd:string ;
+    skiros:DiscreteReasoner "AauSpatialReasoner"^^xsd:string ;
+    skiros:FrameId "skiros:LargeBox-18"^^xsd:string ;
+    skiros:OrientationW "1.0"^^xsd:float ;
+    skiros:OrientationX "0.0"^^xsd:float ;
+    skiros:OrientationY "0.0"^^xsd:float ;
+    skiros:OrientationZ "0.0"^^xsd:float ;
+    skiros:PositionX "10.0"^^xsd:float ;
+    skiros:PositionY "10.0"^^xsd:float ;
+    skiros:PositionZ "0.0"^^xsd:float ;
+    skiros:PublishTf true ;
+    skiros:Template "skiros:large_box_test_starter"^^xsd:string ;
+    skiros:contain skiros:Starter-79 ;
+    skiros:hasTemplate skiros:large_box_test_starter .
+
+skiros:LargeBox-26 a skiros:LargeBox,
+        owl:NamedIndividual ;
+    rdfs:label "c2" ;
+    skiros:BaseFrameId "map"^^xsd:string ;
+    skiros:DiscreteReasoner "AauSpatialReasoner"^^xsd:string ;
+    skiros:FrameId "skiros:LargeBox-26"^^xsd:string ;
+    skiros:OrientationW "1.0"^^xsd:float ;
+    skiros:OrientationX "0.0"^^xsd:float ;
+    skiros:OrientationY "0.0"^^xsd:float ;
+    skiros:OrientationZ "0.0"^^xsd:float ;
+    skiros:PositionX "15.0"^^xsd:float ;
+    skiros:PositionY "10.0"^^xsd:float ;
+    skiros:PositionZ "0.0"^^xsd:float ;
+    skiros:PublishTf true ;
+    skiros:Template "skiros:large_box_test_starter"^^xsd:string ;
+    skiros:hasTemplate skiros:large_box_test_starter .
+
+skiros:Move a owl:class ;
+    rdfs:subClassOf skiros:TurtlesimSkills .
+
+skiros:Move-73 a skiros:Move,
+        owl:NamedIndividual ;
+    rdfs:label "move" ;
+    skiros:hasParam skiros:Parameter-74,
+        skiros:Parameter-75 .
+
+skiros:Move_to_Container1 a owl:class ;
+    rdfs:subClassOf skiros:TurtlesimSkills .
+
+skiros:Move_to_Container1-49 a skiros:Move_to_Container1,
+        owl:NamedIndividual ;
+    rdfs:label "move_to_container1" ;
+    skiros:hasParam skiros:Parameter-50,
+        skiros:Parameter-51,
+        skiros:Parameter-52 .
+
+skiros:Move_to_Container2 a owl:class ;
+    rdfs:subClassOf skiros:TurtlesimSkills .
+
+skiros:Move_to_Container2-53 a skiros:Move_to_Container2,
+        owl:NamedIndividual ;
+    rdfs:label "move_to_container2" ;
+    skiros:hasParam skiros:Parameter-54,
+        skiros:Parameter-55,
+        skiros:Parameter-56 .
+
+skiros:Parameter-44 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Turtle" ;
+    skiros:DataType "cora:Robot"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-45 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Object" ;
+    skiros:DataType "skiros:Product"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-46 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Container" ;
+    skiros:DataType "skiros:Location"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-47 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Robot" ;
+    skiros:DataType "sumo:Agent"^^xsd:string ;
+    skiros:ParameterType 2 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-48 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Container2" ;
+    skiros:DataType "skiros:Location"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-50 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Turtle" ;
+    skiros:DataType "cora:Robot"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-51 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Container" ;
+    skiros:DataType "skiros:Location"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-52 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Robot" ;
+    skiros:DataType "sumo:Agent"^^xsd:string ;
+    skiros:ParameterType 2 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-54 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Turtle" ;
+    skiros:DataType "cora:Robot"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-55 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Robot" ;
+    skiros:DataType "sumo:Agent"^^xsd:string ;
+    skiros:ParameterType 2 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-56 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Container2" ;
+    skiros:DataType "skiros:Location"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-58 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Turtle" ;
+    skiros:DataType "cora:Robot"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-59 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Object" ;
+    skiros:DataType "skiros:Product"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-60 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Container" ;
+    skiros:DataType "skiros:Location"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-61 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Robot" ;
+    skiros:DataType "sumo:Agent"^^xsd:string ;
+    skiros:ParameterType 2 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-65 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Turtle" ;
+    skiros:DataType "cora:Robot"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-66 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Object" ;
+    skiros:DataType "skiros:Product"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-67 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Robot" ;
+    skiros:DataType "sumo:Agent"^^xsd:string ;
+    skiros:ParameterType 2 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-68 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Container2" ;
+    skiros:DataType "skiros:Location"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-72 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Robot" ;
+    skiros:DataType "sumo:Agent"^^xsd:string ;
+    skiros:ParameterType 2 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-74 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Turtle" ;
+    skiros:DataType "cora:Robot"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-75 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Robot" ;
+    skiros:DataType "sumo:Agent"^^xsd:string ;
+    skiros:ParameterType 2 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-77 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Container" ;
+    skiros:DataType "skiros:Location"^^xsd:string ;
+    skiros:ParameterType 0 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Parameter-78 a skiros:Parameter,
+        owl:NamedIndividual ;
+    rdfs:label "Robot" ;
+    skiros:DataType "sumo:Agent"^^xsd:string ;
+    skiros:ParameterType 2 ;
+    rdfs:comment ""^^xsd:string .
+
+skiros:Pick a owl:class ;
+    rdfs:subClassOf skiros:TurtlesimSkills .
+
+skiros:Pick-57 a skiros:Pick,
+        owl:NamedIndividual ;
+    rdfs:label "pick" ;
+    skiros:hasParam skiros:Parameter-58,
+        skiros:Parameter-59,
+        skiros:Parameter-60,
+        skiros:Parameter-61 ;
+    skiros:hasPreCondition skiros:ConditionProperty-63,
+        skiros:ConditionRelation-62 .
+
+skiros:Pick_and_Place a owl:class ;
+    rdfs:subClassOf skiros:TurtlesimSkills .
+
+skiros:Pick_and_Place-43 a skiros:Pick_and_Place,
+        owl:NamedIndividual ;
+    rdfs:label "pick_and_place" ;
+    skiros:hasParam skiros:Parameter-44,
+        skiros:Parameter-45,
+        skiros:Parameter-46,
+        skiros:Parameter-47,
+        skiros:Parameter-48 .
+
+skiros:Place a owl:class ;
+    rdfs:subClassOf skiros:TurtlesimSkills .
+
+skiros:Place-64 a skiros:Place,
+        owl:NamedIndividual ;
+    rdfs:label "place" ;
+    skiros:hasParam skiros:Parameter-65,
+        skiros:Parameter-66,
+        skiros:Parameter-67,
+        skiros:Parameter-68 ;
+    skiros:hasPreCondition skiros:ConditionProperty-70,
+        skiros:ConditionRelation-69 .
+
+skiros:Skiros2Examples a owl:class ;
+    rdfs:subClassOf skiros:Skill .
+
+skiros:SpawnContainer a owl:class ;
+    rdfs:subClassOf skiros:TurtlesimSkills .
+
+skiros:SpawnContainer-76 a skiros:SpawnContainer,
+        owl:NamedIndividual ;
+    rdfs:label "spawncontainer" ;
+    skiros:hasParam skiros:Parameter-77,
+        skiros:Parameter-78 .
+
+skiros:SpawnRandom a owl:class ;
+    rdfs:subClassOf skiros:TurtlesimSkills .
+
+skiros:SpawnRandom-71 a skiros:SpawnRandom,
+        owl:NamedIndividual ;
+    rdfs:label "spawn_random" ;
+    skiros:hasParam skiros:Parameter-72 .
+
+skiros:Starter-79 a skiros:Starter,
+        owl:NamedIndividual ;
+    rdfs:label "object" .
+
+skiros:TurtlesimExample a owl:class ;
+    rdfs:subClassOf skiros:Skiros2Examples .
+
+cora:Robot-1 a cora:Robot,
+        owl:NamedIndividual ;
+    rdfs:label "turtlebot:turtle_robot" ;
+    skiros:BaseFrameId "map"^^xsd:string ;
+    skiros:DiscreteReasoner "AauSpatialReasoner"^^xsd:string ;
+    skiros:FrameId "cora:Robot-1"^^xsd:string ;
+    skiros:OrientationW "1.0"^^xsd:float ;
+    skiros:OrientationX "0.0"^^xsd:float ;
+    skiros:OrientationY "0.0"^^xsd:float ;
+    skiros:OrientationZ "0.0"^^xsd:float ;
+    skiros:PositionX "0.0"^^xsd:float ;
+    skiros:PositionY "0.0"^^xsd:float ;
+    skiros:PositionZ "0.0"^^xsd:float ;
+    skiros:PublishTf true ;
+    skiros:SkillMgr "turtle_robot"^^xsd:string ;
+    skiros:Template "turtlebot:turtle_robot"^^xsd:string ;
+    skiros:hasSkill skiros:Move-73,
+        skiros:Move_to_Container1-49,
+        skiros:Move_to_Container2-53,
+        skiros:Pick-57,
+        skiros:Pick_and_Place-43,
+        skiros:Place-64,
+        skiros:SpawnContainer-76,
+        skiros:SpawnRandom-71 ;
+    skiros:hasTemplate turtlebot:turtle_robot ;
+    turtlebot:TurtleName "/turtle1"^^xsd:string .
+
+skiros:TurtlesimSkills a owl:class ;
+    rdfs:subClassOf skiros:TurtlesimExample .
+
