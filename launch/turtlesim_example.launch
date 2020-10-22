@@ -1,12 +1,12 @@
 <launch>
-  <arg name="skill_list" default="[pick_and_place, move_to_container1, move_to_container2, pick, place, spawn_random, move, spawncontainer]"/>
+  <arg name="skill_list" default="[go_to_goal, spawn_random, move, spawncontainer]"/>
   <arg name="debug" default="false"/>
   <arg name="deploy" default="true"/>
 
   <node name="turtlesim" pkg="turtlesim" type="turtlesim_node" />
 
   <include file="$(find skiros2)/launch/world_model_server.launch">
-      <arg name="init_scene" value="my_world_with_container.turtle"/>
+      <arg name="init_scene" value="motion.turtle"/>
       <arg name="verbose" value="false"/>
       <arg name="gui" value="true"/>
       <arg name="reasoners_pkgs" value="[skiros2_std_reasoners]"/>
