@@ -14,50 +14,53 @@ import sys
 #################################################################################
 # motion_planning
 #################################################################################
-class Go_to_goal(SkillDescription):
+class GoToGoal(SkillDescription):
     def createDescription(self):
         self.addParam("Turtle", Element("cora:Robot"), ParamTypes.Required)
         self.addParam("Goal",Element("skiros:Location"),ParamTypes.Required)
-        # self.addParam("Obstacle",Element("skiros:Location"),ParamTypes.Required)
+        #self.addParam("Obstacle",Element("skiros:Location"),ParamTypes.Required)
         self.addParam("f_attract_min", 1.0, ParamTypes.Required)
         self.addParam("f_repel_max", 5.0, ParamTypes.Required)
         self.addParam("w_attract", 0.5, ParamTypes.Required)
         self.addParam("w_repel", 9.0, ParamTypes.Required)
-
-
-        # self.start = np.array(start).astype(np.float32)
-        # self.goal = np.array(goal).astype(np.float32)
-        # self.curr_pose = copy.copy(self.start)
-        # self.w_attract = w_attract
-        # self.w_repel = w_repel
-        # self.f_attract_min = 1.0
-        # self.f_repel_max = 5.0
-        # self.obstacles = obstacles
-        # self.obs_t = []
+        self.addParam("turtle_pose", float, ParamTypes.Optional)
+        # we want to output linear and angular velocity to the command primitive
+        # self.addParam("Linear", float, ParamTypes.Optional)
+        self.addParam("Angular", float, ParamTypes.Optional)
 
 
 class go_to_goal(PrimitiveBase):
     def createDescription(self):
-        self.setDescription(Go_to_goal(), self.__class__.__name__)
+        self.setDescription(GoToGoal(), self.__class__.__name__)
+
 
     def _calculateEuclidean(self, p1, p2):
         return np.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
 
     def _calculateAttractionForces(self, distance, weight=0.5, threshold=1.0):
-        return 1.0 + max(minimum, weight * distance)
+        return 1.0 + max(threshold, weight * distance)
 
 
     def _calculateRepulsiveForces(self, distance, weight=9.0, threshold=5.0):
-        return -weight * min(maximum, (1.0 / (1.0 + distance**4)))
+        return -weight * min(threshold, (1.0 / (1.0 + distance**4)))
+
 
     def _calculateAngle(self, source, target):
         f = target - source
-        return np.atan2(f[1], f[0])
+        return np.math.atan2(f[1], f[0])
 
 
-    def _updatePose(self, fx, fy):
-        curr_pose += np.array([fx * 0.02, fy * 0.02])
+    def _updatePose(self, force, dt=0.02):
+        turtle = self.params["Turtle"].value
+        turtle_pose = np.array(turtle.getData(":Position")[:2])
+        ##turtle_pose += force #* dt  # v=dx/dt but we try to treat force as velocity
+        L=force*5
+        I=25
+        turtle_pose += L/I
+        # np.array([fx * 0.02, fy * 0.02])
+        return turtle_pose
+        # return force * dt
 
     # def onStart(self):
     #     # turtle = self.params["Turtle"].value.getProperty("turtlebot:TurtleName").value
@@ -91,7 +94,7 @@ class go_to_goal(PrimitiveBase):
         goal_pose = np.array(goal.getData(":Position")[:2])
 
         # calculate attractor force
-        #   calculate distance between turtle pose and goal pose
+        # calculate distance between turtle pose and goal pose
         dist_to_goal = self._calculateEuclidean(turtle_pose, goal_pose)
 
         # if turtle close to goal, success
@@ -111,7 +114,6 @@ class go_to_goal(PrimitiveBase):
         # calculate force on turtle
         force += f_attract * np.array(np.cos(theta), np.sin(theta))
 
-
         ###
         # Repulsor
         ################################################################
@@ -123,19 +125,19 @@ class go_to_goal(PrimitiveBase):
         # obstacles = self.params["Obstacle"].values
 
         obstacles = self.wmi.resolve_elements(Element("skiros:LargeBox"))
-        for obj in obstancles:
+        for obj in obstacles:
 
-            #   get pose of obstancle (either from params or directly from wm)
+            # get pose of obstacle (either from params or directly from wm)
             obj_pose = np.array(obj.getData(":Position")[:2])
 
-            #   calculate distance between turtle pose and obstacle pose
+            # calculate distance between turtle pose and obstacle pose
             dist_to_obj = self._calculateEuclidean(turtle_pose, obj_pose)
 
-            #   if turtle not close to obj, success
+            # if turtle not close to obj, success
             if dist_to_obj <= obj_dist_threshold:
                 continue
 
-            #   calculate repulsor force
+            # calculate repulsor force
             minimum = self.params["f_repel_max"].value
             weight = self.params["w_repel"].value
 
@@ -148,13 +150,47 @@ class go_to_goal(PrimitiveBase):
                 theta += 2*np.pi
 
             # calculate and sum force on turtle
-            force += f_repel * np.array(np.cos(theta), np.sin(theta))
+            force -= f_repel * np.array(np.cos(theta), np.sin(theta))
+            
+        force = self._updatePose(force)
+        # do conversion from force to angular velocity, assign it to "angular"
+        self.params["Angular"].values = list((np.sqrt(force))/5) #centrifugal force
+        #self.params["Angular"].values = list(force/5) # axis of rotation perpendicular to the position vector
+        print("angular_velocity=", self.params["Angular"].values)
+        self.params["turtle_pose"].values=list(force) # sets turtle_pose value before feeding it to Command
+        print("turtle_pose=", self.params["turtle_pose"].values)
+
+        return self.success("")
+        
 
 
 
 
 
-        # if (self._calculateEuclidean(self.curr_pose, self.goal) > 0.1):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# if (self._calculateEuclidean(self.curr_pose, self.goal) > 0.1):
         #     f_rep_x = 0.0
         #     f_rep_y = 0.0
         #     # Calculate forces
@@ -185,92 +221,3 @@ class go_to_goal(PrimitiveBase):
         #     f_rep_y = f_repel * np.sin(obs_t)
         #     fx += f_attract * np.cos(goal_theta) - f_rep_x
         #     fy += f_attract * np.sin(goal_theta) - f_rep_y
-
-            self._updatePose(fx, fy)
-
-            return True
-
-        return False
-
-
-# ################################################################################
-# #Move
-# ################################################################################
-
-# class Move(SkillDescription):
-#     def createDescription(self):
-#         self.addParam("Turtle", Element("cora:Robot"), ParamTypes.Required)
-#         self.addParam("Distance", 0.0, ParamTypes.Required)
-#         self.addParam("Angle", 0.0, ParamTypes.Required)
-#         self.addParam("Duration", 1.0, ParamTypes.Optional)
-
-# class move(SkillBase):
-#     def createDescription(self):
-#         self.setDescription(Move(), self.__class__.__name__)
-
-#     def expand(self, skill):
-#         t = self.params["Duration"].value
-#         v = self.params["Distance"].value / t
-#         w = self.params["Angle"].value / t
-#         uid = id(self)
-#         skill.setProcessor(ParallelFs())
-#         skill(
-#             self.skill("Monitor", "monitor"),
-#             self.skill("Command", "command",
-#                        specify={"Linear{}".format(uid): v, "Angular{}".format(uid): w},
-#                        remap={"Linear": "Linear{}".format(uid), "Angular": "Angular{}".format(uid)}),
-#             self.skill("Wait", "wait", specify={"Duration": t})
-#         )
-
-# class SpawnContainer(SkillDescription):
-#     def createDescription(self):
-#         #=======Params=========
-#         self.addParam("Name", str, ParamTypes.Required)
-#         self.addParam("X", 0.0, ParamTypes.Required)
-#         self.addParam("Y", 0.0, ParamTypes.Required)
-#         self.addParam("Rotation", 0.0, ParamTypes.Required)
-#         self.addParam("Container", Element("skiros:Location"), ParamTypes.Required)
-
-# class spawncontainer(SkillBase):
-#     def createDescription(self):
-#         self.setDescription(SpawnContainer(), self.__class__.__name__)
-
-#     def expand(self, skill):
-#         container = self.params["Container"].value
-#         name = self.params["Name"].value
-#         container.label = "Container:" + name
-#         container.setProperty("Container:ContainerName", "/{}".format(name))
-#         container.setData(":Position", [self.params["X"].value, self.params["Y"].value, 0.0])
-#         container.setData(":OrientationEuler", [0.0, 0.0, np.np.radians(self.params["Rotation"].value)])
-#         container.addRelation("skiros:Scene-0", "skiros:contain", "-1")
-#         container = self._wmi.add_element(container)
-#         self.params["Container"].value = container
-
-#         return self.success("")
-
-# #################################################################################
-# # Spawning
-# #################################################################################
-
-# class SpawnRandom(SkillDescription):
-#     def createDescription(self):
-#         self.addParam("Name", str, ParamTypes.Required)
-#         self.addParam("RangeX", [2.0, 8.0], ParamTypes.Optional)
-#         self.addParam("RangeY", [2.0, 8.0], ParamTypes.Optional)
-#         self.addParam("RangeR", [0.0, 360.0], ParamTypes.Optional)
-
-# class spawn_random(SkillBase):
-#     def createDescription(self):
-#         self.setDescription(SpawnRandom(), self.__class__.__name__)
-
-#     def expand(self, skill):
-#         range_x = self.params["RangeX"].values
-#         range_y = self.params["RangeY"].values
-#         range_r = self.params["RangeR"].values
-#         x = np.random.uniform(low=range_x[0], high=range_x[1])
-#         y = np.random.uniform(low=range_y[0], high=range_y[1])
-#         r = np.random.uniform(low=range_r[0], high=range_r[1])
-
-#         skill.setProcessor(SerialStar())
-#         skill(self.skill("Spawn", "spawn", specify={"X": x, "Y": y, "Rotation": r}))
-

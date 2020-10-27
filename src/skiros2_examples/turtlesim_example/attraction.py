@@ -46,6 +46,7 @@ class Plan():
     def _calculateAttractionForces(self):
         return 1.0 + max(self.f_attract_min, self.w_attract * self._calculateEuclidean(self.curr_pose, self.goal))
 
+
     def _calculateRepulsiveForces(self):
         f_obs = []
         for i, obs in enumerate(self.obstacles):
@@ -53,10 +54,9 @@ class Plan():
 
         return max(f_obs)
 
+
     def update(self):
         if (self._calculateEuclidean(self.curr_pose, self.goal) > 0.1):
-            print("Current pose: ({:.2f}, {:.2f})".format(self.curr_pose[0], self.curr_pose[1]))
-
             f_rep_x = 0.0
             f_rep_y = 0.0
             # Calculate forces
@@ -69,7 +69,7 @@ class Plan():
             self.memory_x.append(self.curr_pose[0])
             self.memory_y.append(self.curr_pose[1])
 
-            # Calculate angle between robot and other objects
+            # Calculate angle between robot and other objects(goal)
             goal_theta = math.atan2((self.goal[1] - self.curr_pose[1]), (self.goal[0] - self.curr_pose[0]))
 
             for i,obs_t in enumerate(self.obstacles):

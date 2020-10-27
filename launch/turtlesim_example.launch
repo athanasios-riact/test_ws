@@ -1,5 +1,5 @@
 <launch>
-  <arg name="skill_list" default="[go_to_goal, spawn_random, move, spawncontainer]"/>
+  <arg name="skill_list" default="[move_to_target]"/>
   <arg name="debug" default="false"/>
   <arg name="deploy" default="true"/>
 

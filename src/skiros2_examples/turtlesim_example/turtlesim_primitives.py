@@ -85,7 +85,10 @@ class command(PrimitiveBase):
 
     def execute(self):
         turtle = self.params["Turtle"].value.getProperty("turtlebot:TurtleName").value
+        print("Linear_value=",self.params["Linear"].values)
+        self.params["Linear"].values
         self._send_command(self.params["Linear"].value, self.params["Angular"].value)
+        
         return self.step("{}: moving at [{} {}]".format(turtle, self.params["Linear"].value, self.params["Angular"].value))
 
 
